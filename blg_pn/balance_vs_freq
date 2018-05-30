@@ -1,0 +1,22 @@
+import time
+import math
+import numpy as np
+import labrad
+import labrad.units as U
+from include import CapacitanceBridge
+
+frequencies = np.linspace(100,)
+
+
+cxn = labrad.connect()
+lck = cxn.sr830
+lck.select_device(1)
+
+acbox = cxn.acbox
+acbox.select_device()
+
+bridge = CapacitanceBridge.CapacitanceBridgeSR830Lockin
+
+cb = bridge(lck=lck, acbox=acbox, time_const=0.1,
+                         iterations=5, tolerance=5e-4,
+                         s_in1=[0.5, 0.5], s_in2=[-0.5,-0.5], excitation_channel='Y2')

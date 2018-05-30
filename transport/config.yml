@@ -1,0 +1,64 @@
+# NOTE: Only compatible with the new version of sr830 server (in scalabrad-0.83 folder)
+
+file:
+  data_dir: test
+  file_name: test_plotting
+  comment: four terminal, voltage bias,3x, mostly aligned
+
+meas_parameters:
+  n0_pnts: 1000
+  p0_pnts: 100
+  n0_rng: #n0 if there are two gates, vg if there is one
+    - -10
+    - 10
+  p0_rng: #only used for two gate measurements
+    - -10.
+    - 10.
+  delta_var: 0.2
+
+measurement:
+  terminals: 4 #only for recording purposes, not used
+  bias: V #V for voltage bias or I for current bias
+  lockins: 2
+  gates: 2
+  divider: 1e-3 #divider if bias = V, bias resistor in Ohms if bias = I
+  source: 1 #whether voltage/current is sourced from lockin 1 or 2
+  autodetect_lockins: True #works for two lockins set to I and V modes
+  multiplier: 1.0 #1.0 unless a voltage multiplier is used on the gates!!
+
+lockin1:
+  type: I #I,V
+  sens: 0.01 #V or uA
+  tc: 0.1 #s
+  Vout: 0.25 #Vrms, will only be set if source == 1
+  freq: 17.777 #Hz
+  ch_x: 0
+  ch_y: 1
+  preamp: 1. #preamp gain on lockin1
+  GPIB: 27 #only used if autodetect_lockins = false
+
+#ignored if lockins = 1
+lockin2:
+  type: V
+  sens: 20e-3
+  tc: 0.1
+  Vout: 0.0 #Vrms, will only be set if source == 2
+  freq: 17.777
+  ch_x: 2
+  ch_y: 3
+  preamp: 1000.
+  GPIB: 0 #only used if autodetect_lockins = false
+
+gate1:
+  type: vt #vt or vb
+  ch: 0
+  limits:
+    - -15.0
+    - 15.0
+
+gate2:
+  type: vb #vt or vb
+  ch: 1
+  limits:
+    - -10.0
+    - 10.0

@@ -1,0 +1,67 @@
+# NOTE: Only compatible with the new version of sr830 server (in scalabrad-0.83 folder)
+
+file:
+  data_dir: EMS070
+  file_name: R34_0_5T
+  comment: two terminal, voltage bias,3x, mostly aligned
+
+meas_parameters:
+  n0_pnts: 2000
+  b_pnts: 1
+  n0_rng: #n0 if there are two gates, vg if there is one
+    - -13.0
+    - 13.0
+  b_rng:
+    - 0.5
+    - 0.5
+  p0fixed: 0.0 #only used for two gate measurements
+  delta_var: 0.00 #only used for two gate measurements
+
+measurement:
+  terminals: 4 #only for recording purposes, not used
+  bias: V #V or I
+  lockins: 2
+  gates: 1
+  divider: 1e-3 #divider if bias = V, bias resistor in Ohms if bias = I
+  source: 1 #whether voltage/current is sourced from lockin 1 or 2
+  autodetect_lockins: True
+  # safety_ramp: True #not used yet
+  # ramp_to_zero: True #not used yet
+
+#If autodetect_lockins: True, the # of lockins connected to labrad == # of lockins of the measurement, the lockins are detected by checking what mode (current or voltage) they are in.
+lockin1:
+  type: I #I,V
+  sens: 0.01 #V or uA
+  tc: 0.1 #s
+  Vout: 0.25 #Vrms, will only be set if source == 1
+  freq: 17.777 #Hz
+  ch_x: 0
+  ch_y: 1
+  preamp: 1. #preamp gain on lockin1
+  GPIB: 27 #only used if autodetect_lockins = false
+
+#ignored if lockins = 1
+lockin2:
+  type: V
+  sens: 500e-3
+  tc: 0.1
+  Vout: 0.0 #Vrms, will only be set if source == 2
+  freq: 17.777
+  ch_x: 2
+  ch_y: 3
+  preamp: 1000.
+  GPIB: 0 #only used if autodetect_lockins = false
+
+gate1:
+  type: vt #vt or vb
+  ch: 0
+  limits:
+    - -15.0
+    - 15.0
+
+gate2:
+  type: vb #vt or vb
+  ch: 1
+  limits:
+    - -10.0
+    - 10.0
