@@ -71,7 +71,7 @@ class nhmflResistiveMagnetWrapper(DeviceWrapper):
         p.open(port)
         print("opened on port '%s'"%port)
 
-        self.baud = 9600
+        self.baud = 115200  #updated from 9600
         self.timeout = Value(2,'s')
         self.parity = 'E'
         self.data_bits = 7
